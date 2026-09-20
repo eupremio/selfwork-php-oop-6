@@ -1,58 +1,70 @@
-<?php class Category {
-    public function getMyCategory(): string
-    {
-        return "Categoria";
-    }
-}
+<?php
 
-class News extends Category
-{
-    public function getMyCategory(): string
-    {
-        return "News";
-    }
-}
-
-class Gossip extends Category
-{
-    public function getMyCategory(): string
-    {
-        return "Gossip";
-    }
-}
+require_once "class.php";
 
 class Post
 {
-    private string $title;
-    private Category $category;
+    private string $titolo;
+    private Categoria $categoria;
     private string $tag;
 
-    public function __construct(string $titolo, Category $categoria, string $tag)
-    {
-        $this->title = $titolo;
-        $this->category = $categoria;
+    public function __construct(
+        string $titolo,
+        Categoria $categoria,
+        string $tag
+    ) {
+        $this->titolo = $titolo;
+        $this->categoria = $categoria;
         $this->tag = $tag;
     }
 
-    public function getTitle(): string
+    public function getTitolo(): string
     {
-        return $this->title;
+        return $this->titolo;
     }
 
-    public function getCategory(): string
+    public function getCategoria(): string
     {
-        return $this->category->getMyCategory();
+        return $this->categoria->getCategoria();
     }
 
     public function getTag(): string
     {
         return $this->tag;
     }
+
+    public function mostraArticolo(): void
+    {
+        echo "Titolo: " . $this->titolo . "<br>";
+        echo "Categoria: " . $this->getCategoria() . "<br>";
+        echo "Tag: " . $this->tag . "<br>";
+    }
 }
 
-$post = new Post("Titolo", new News(), "tag 1");
+$post1 = new Post(
+    "Le trazioni",
+    new Sport(),
+    "calisthenics"
+);
 
-$post1 = new Post("Titolo 2", new Gossip(), "tag 2");
+$post2 = new Post(
+    "Le notizie del giorno",
+    new Attualita(),
+    "news"
+);
 
-echo $post->getCategory();
-echo $post1->getTitle();
+$post3 = new Post(
+    "Le curiosità dei personaggi famosi",
+    new Gossip(),
+    "celebrità"
+);
+
+$post1->mostraArticolo();
+
+echo "<hr>";
+
+$post2->mostraArticolo();
+
+echo "<hr>";
+
+$post3->mostraArticolo();
